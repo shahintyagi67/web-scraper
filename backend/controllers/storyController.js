@@ -64,6 +64,7 @@ const toggleBookmark = async (req, res) => {
   }
 };
 
+
 const getBookmarkedStories = async (req, res) => {
   try {
     const user = await User.findById(req.user._id).populate('bookmarks');
