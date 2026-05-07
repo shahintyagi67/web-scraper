@@ -7,7 +7,7 @@ const StoryCard = ({ story, initialBookmarked }) => {
   const { userInfo } = useContext(AuthContext);
 
   const toggleBookmark = async () => {
-    if (!userInfo) {
+    if (!userInfo) {   
       alert('Please login to bookmark stories');
       return;
     }
