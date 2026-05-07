@@ -1,4 +1,5 @@
 import { useState, useContext } from 'react';
+import toast from 'react-hot-toast';
 import API from '../api/axios';
 import AuthContext from '../context/AuthContext';
 
@@ -8,17 +9,20 @@ const StoryCard = ({ story, initialBookmarked }) => {
 
   const toggleBookmark = async () => {
     if (!userInfo) {   
-      alert('Please login to bookmark stories');
+      toast.error('Please login to bookmark stories');
       return;
     }
 
     try {
       const { data } = await API.post(`/stories/${story._id}/bookmark`);
       setIsBookmarked(data.isBookmarked);
+      toast.success(data.isBookmarked ? 'Added to bookmarks' : 'Removed from bookmarks');
     } catch (error) {
       console.error('Bookmark failed', error);
+      toast.error('Failed to update bookmark');
     }
   };
+  
 
   return (
     <div className="story-card glass animate-fade-in">

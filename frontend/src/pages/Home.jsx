@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
+import toast from 'react-hot-toast';
 import API from '../api/axios';
 import StoryCard from '../components/StoryCard';
 import AuthContext from '../context/AuthContext';
@@ -36,12 +37,16 @@ const Home = () => {
   }, [page, userInfo]);
 
   const handleScrape = async () => {
+    const loadingToast = toast.loading('Scraping latest stories...');
     try {
       await API.post('/scrape');
-      setPage(1); // Reset to page 1 to see new stories
-      window.location.reload(); // Simple way to refresh data
+      toast.success('Successfully scraped top 10 stories!', { id: loadingToast });
+      setPage(1); 
+      // Instead of reload, we could just fetch stories again, but user had reload logic.
+      // I'll keep it simple for now as per their existing logic.
+      setTimeout(() => window.location.reload(), 1000); 
     } catch (err) {
-      alert('Manual scrape failed');
+      toast.error('Manual scrape failed', { id: loadingToast });
     }
   };
 

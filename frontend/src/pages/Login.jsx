@@ -1,4 +1,5 @@
 import { useState, useContext } from 'react';
+import toast from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
 import AuthContext from '../context/AuthContext';
 
@@ -18,9 +19,12 @@ const Login = () => {
     setLoading(true);
     try {
       await login(email, password);
+      toast.success('Login successful!');
       navigate('/');
     } catch (err) {
-      setError(err.response?.data?.message || 'Login failed');
+      const msg = err.response?.data?.message || 'Login failed';
+      setError(msg);
+      toast.error(msg);
     } finally {
       setLoading(false);
     }

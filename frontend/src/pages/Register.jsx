@@ -1,4 +1,5 @@
 import { useState, useContext } from 'react';
+import toast from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
 import AuthContext from '../context/AuthContext';
 
@@ -18,9 +19,12 @@ const Register = () => {
     setLoading(true);
     try {
       await register(username, email, password);
+      toast.success('Registration successful!');
       navigate('/');
     } catch (err) {
-      setError(err.response?.data?.message || 'Registration failed');
+      const msg = err.response?.data?.message || 'Registration failed';
+      setError(msg);
+      toast.error(msg);
     } finally {
       setLoading(false);
     }
