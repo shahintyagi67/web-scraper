@@ -13,4 +13,5 @@ const triggerScrape = async (req, res) => {
   }
 };
 
+
 module.exports = { triggerScrape };
