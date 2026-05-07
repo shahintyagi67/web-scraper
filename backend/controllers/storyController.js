@@ -55,9 +55,9 @@ const toggleBookmark = async (req, res) => {
     }
 
     await user.save();
-    res.json({ 
+    res.json({
       isBookmarked: !isBookmarked,
-      bookmarks: user.bookmarks 
+      bookmarks: user.bookmarks
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -65,10 +65,11 @@ const toggleBookmark = async (req, res) => {
 };
 
 
+
 const getBookmarkedStories = async (req, res) => {
   try {
     const user = await User.findById(req.user._id).populate('bookmarks');
-    
+
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
